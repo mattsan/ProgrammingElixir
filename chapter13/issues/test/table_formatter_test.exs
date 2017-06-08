@@ -37,7 +37,7 @@ defmodule TableFormatterTest do
 
   test "Output is correct" do
     result = capture_io fn ->
-      TF.print_table_for_columns(simple_test_data, headers)
+      TF.print_table_for_columns(simple_test_data(), headers())
     end
 
     assert result == """
