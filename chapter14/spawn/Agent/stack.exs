@@ -1,3 +1,23 @@
+# usage:
+#
+# $ iex
+# iex(1)> c "stack.exs"
+# [Stack]
+# iex(2)> {:ok, stack} = Stack.start_link()
+# {:ok, #PID<0.88.0>}
+# iex(3)> Stack.push(stack, 1)
+# :ok
+# iex(4)> Stack.push(stack, 2)
+# :ok
+# iex(5)> Stack.push(stack, 3)
+# :ok
+# iex(6)> Stack.get_list(stack)
+# [3, 2, 1]
+# iex(7)> Stack.pop(stack)
+# 3
+# iex(8)> Stack.get_list(stack)
+# [2, 1]
+
 defmodule Stack do
   def start_link(list \\ []) do
     Agent.start_link(fn -> list end)

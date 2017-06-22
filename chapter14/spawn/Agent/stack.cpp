@@ -1,3 +1,11 @@
+// usage:
+//
+// $ g++ --std=c++11 -o stack stack.cpp
+// $ ./stack
+// 3
+// 2
+// 1
+
 #include <iostream>
 #include <forward_list>
 
