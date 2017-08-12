@@ -1,3 +1,5 @@
 sandbox/
 *.beam
 *.dump
+*.hi
+*.o
