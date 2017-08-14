@@ -1,8 +1,8 @@
 defmodule KV.Registry do
   use GenServer
 
-  def start_link(init_state) do
-    GenServer.start_link(__MODULE__, init_state, name: __MODULE__)
+  def start_link(stash_pid) do
+    GenServer.start_link(__MODULE__, stash_pid, name: __MODULE__)
   end
 
   def register(key, value) do
@@ -13,11 +13,20 @@ defmodule KV.Registry do
     GenServer.call(__MODULE__, {:lookup, key})
   end
 
-  def handle_cast({:register, key, value}, state) do
-    {:noreply, Map.put(state, key, value)}
+  def init(stash_pid) do
+    dictionary = KV.Stash.load(stash_pid)
+    {:ok, {stash_pid, dictionary}}
   end
 
-  def handle_call({:lookup, key}, _from, state) do
-    {:reply, Map.get(state, key), state}
+  def terminate(_reason, {stash_pid, dictionary}) do
+    KV.Stash.store(stash_pid, dictionary)
+  end
+
+  def handle_cast({:register, key, value}, {stash_pid, dictionary}) do
+    {:noreply, {stash_pid, Map.put(dictionary, key, value)}}
+  end
+
+  def handle_call({:lookup, key}, _from, {stash_pid, dictionary}) do
+    {:reply, Map.get(dictionary, key), {stash_pid, dictionary}}
   end
 end
