@@ -2,7 +2,7 @@ defmodule Sequence.Server do
   use GenServer
 
   def start_link(pid_stash) do
-    GenServer.start_link(__MODULE__, pid_stash, name: __MODULE__)
+    {:ok, _pid} = GenServer.start_link(__MODULE__, pid_stash, name: __MODULE__)
   end
 
   def next_number do
@@ -21,10 +21,6 @@ defmodule Sequence.Server do
     {:ok, {current_number, pid_stash}}
   end
 
-  def terminate(_reason, {current_number, pid_stash}) do
-    Sequence.Stash.save_value(pid_stash, current_number)
-  end
-
   def handle_call(:next_number, _from, {current_number, pid_stash}) do
     next_number = current_number + 1
     {:reply, next_number, {next_number, pid_stash}}
@@ -40,5 +36,9 @@ defmodule Sequence.Server do
 
   def handle_cast({:increment_number, delta}, {current_number, pid_stash}) do
     {:noreply, {current_number + delta, pid_stash}}
+  end
+
+  def terminate(_reason, {current_number, pid_stash}) do
+    Sequence.Stash.save_value(pid_stash, current_number)
   end
 end
