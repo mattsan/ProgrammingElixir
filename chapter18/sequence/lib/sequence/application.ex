@@ -4,8 +4,9 @@ defmodule Sequence.Application do
   use Application
 
   def start(_type, _args) do
+    initial_number = Application.get_env(:sequence, :initial_number)
     children = [
-      {Sequence.Supervisor, 123},
+      {Sequence.Supervisor, initial_number}
     ]
 
     opts = [strategy: :one_for_one, name: Sequence.Supervisor]
