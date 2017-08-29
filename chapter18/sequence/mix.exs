@@ -22,6 +22,7 @@ defmodule Sequence.Mixfile do
 
   defp deps do
     [
+      {:distillery, "~> 1.4", runtime: false}
     ]
   end
 end
