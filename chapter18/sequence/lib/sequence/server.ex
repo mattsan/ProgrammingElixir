@@ -1,12 +1,14 @@
 defmodule Sequence.Server do
   use GenServer
 
+  @vsn 0
+
   def start_link(stash_pid) do
     {:ok, _pid} = GenServer.start_link(__MODULE__, stash_pid, name: __MODULE__)
   end
 
   def next_number do
-    GenServer.call(__MODULE__, :next_number)
+    with number = GenServer.call(__MODULE__, :next_number), do: "The next number is #{number}"
   end
 
   def increment_number(delta) do
