@@ -17,7 +17,7 @@ defmodule CodeChange.Worker do
   end
 
   def get do
-    GenServer.call(__MODULE__, :get)
+    [version: @vsn, value: GenServer.call(__MODULE__, :get)]
   end
 
   def set(value) do
