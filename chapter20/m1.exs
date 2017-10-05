@@ -1,15 +1,17 @@
 defmodule My do
-  defmacro macro(name) do
-    IO.inspect quote do: def unquote(name)(), do: unquote(name)
+  defmacro mydef(name) do
+    IO.inspect(quote do
+      def unquote(name)(), do: unquote(name)
+    end)
   end
 end
 
 defmodule Test do
   require My
 
-  My.macro(:foo)
-  My.macro(:bar)
-  My.macro(:baz)
+  My.mydef(:foo)
+  My.mydef(:bar)
+  My.mydef(:baz)
 end
 
 # {:def, [context: My, import: Kernel], [{:foo, [context: My], []}, [do: :foo]]}
