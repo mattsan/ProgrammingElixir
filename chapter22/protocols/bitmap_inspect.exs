@@ -1,6 +1,23 @@
 defimpl Inspect, for: Bitmap do
   def inspect(%Bitmap{value: value}, _opts) do
-    "%Bitmap{#{value}=#{as_binary(value)}}"
+    import Inspect.Algebra
+
+    concat(
+      [
+        nest(
+          concat(
+            [
+              "%Bitmap{",
+              break(""),
+              nest(concat([to_string(value), "=", break(""), as_binary(value)]), 2)
+            ]
+          ),
+          2
+        ),
+        break(""),
+        "}"
+      ]
+    )
   end
 
   defp as_binary(value) do
