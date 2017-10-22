@@ -1,5 +1,8 @@
+### ガード節なし
 
-```elixir:ガード節なし
+#### コード
+
+```elixir
 quote do
   def foo(a) do
     a * a
@@ -7,14 +10,18 @@ quote do
 end
 ```
 
-```elixir:結果
+#### 結果
+
+```elixir
 {:def, [context: Elixir, import: Kernel],
  [{:foo, [context: Elixir], [{:a, [], Elixir}]},
   [do: {:*, [context: Elixir, import: Kernel],
     [{:a, [], Elixir}, {:a, [], Elixir}]}]]}
 ```
 
-```elixir:結果（書き下したもの）
+#### 結果（書き下したもの）
+
+```elixir
 {
   :def,
   [context: Elixir, import: Kernel],
@@ -32,7 +39,11 @@ end
 }
 ```
 
-```elixir:ガード節あり
+### ガード節あり
+
+#### コード
+
+```elixir
 quote do
   def foo(a) when a < 10 do
     a * a
@@ -40,7 +51,9 @@ quote do
 end
 ```
 
-```elixir:結果
+#### 結果
+
+```elixir
 {:def, [context: Elixir, import: Kernel],
  [{:when, [context: Elixir],
    [{:foo, [], [{:a, [], Elixir}]},
@@ -49,7 +62,9 @@ end
     [{:a, [], Elixir}, {:a, [], Elixir}]}]]}
 ```
 
-```elixir:結果（書き下したもの）
+#### 結果（書き下したもの）
+
+```elixir
 {
   :def,
   [context: Elixir, import: Kernel],
